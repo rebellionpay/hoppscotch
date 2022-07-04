@@ -146,13 +146,13 @@
 }
 
 @mixin yellow-theme {
-  --accent-color: theme("colors.yellow.500");
-  --accent-light-color: theme("colors.yellow.400");
-  --accent-dark-color: theme("colors.yellow.600");
+  --accent-color: theme("colors.yellow.300");
+  --accent-light-color: theme("colors.yellow.200");
+  --accent-dark-color: theme("colors.yellow.400");
   --accent-contrast-color: theme("colors.white");
-  --gradient-from-color: theme("colors.yellow.200");
-  --gradient-via-color: theme("colors.yellow.400");
-  --gradient-to-color: theme("colors.yellow.600");
+  --gradient-from-color: theme("colors.yellow.100");
+  --gradient-via-color: theme("colors.yellow.200");
+  --gradient-to-color: theme("colors.yellow.400");
 }
 
 @mixin orange-theme {
