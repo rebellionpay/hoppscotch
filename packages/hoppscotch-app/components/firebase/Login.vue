@@ -8,7 +8,7 @@
   >
     <template #body>
       <div v-if="mode === 'sign-in'" class="flex flex-col px-2 space-y-2">
-        <SmartItem
+        <!--<SmartItem
           :loading="signingInWithGitHub"
           svg="auth/github"
           :label="`${$t('auth.continue_with_github')}`"
@@ -25,7 +25,7 @@
           svg="auth/microsoft"
           :label="`${$t('auth.continue_with_microsoft')}`"
           @click.native="signInWithMicrosoft"
-        />
+        />-->
         <SmartItem
           svg="auth/email"
           :label="`${$t('auth.continue_with_email')}`"
@@ -53,6 +53,24 @@
           />
           <label for="email">
             {{ $t("auth.email") }}
+          </label>
+        </div>
+        <div class="flex flex-col">
+          <input
+            id="password"
+            v-model="form.password"
+            v-focus
+            class="input floating-input"
+            placeholder=" "
+            type="password"
+            name="password"
+            autocomplete="off"
+            required
+            spellcheck="false"
+            autofocus
+          />
+          <label for="password">
+            {{ $t("auth.password") }}
           </label>
         </div>
         <ButtonPrimary
@@ -148,6 +166,7 @@ export default defineComponent({
     return {
       form: {
         email: "",
+        password: "",
       },
       signingInWithGoogle: false,
       signingInWithGitHub: false,
@@ -281,11 +300,7 @@ export default defineComponent({
     async signInWithEmail() {
       this.signingInWithEmail = true
 
-      const actionCodeSettings = {
-        url: `${process.env.BASE_URL}/enter`,
-        handleCodeInApp: true,
-      }
-      await signInWithEmail(this.form.email, actionCodeSettings)
+      await signInWithEmail(this.form.email, this.form.password)
         .then(() => {
           this.mode = "email-sent"
           setLocalConfig("emailForSignIn", this.form.email)

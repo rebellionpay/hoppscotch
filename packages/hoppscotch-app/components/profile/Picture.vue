@@ -18,7 +18,7 @@
       :class="[`rounded-${rounded}`, `w-${size} h-${size}`]"
       :style="`background-color: ${toHex(initial)}`"
     >
-      {{ initial.charAt(0).toUpperCase() }}
+      {{ initial && initial.charAt(0).toUpperCase() }}
     </div>
     <span
       v-if="indicator"
@@ -66,7 +66,7 @@ export default defineComponent({
   methods: {
     toHex(initial) {
       let hash = 0
-      if (initial.length === 0) return hash
+      if (!initial || initial.length === 0) return hash
       for (let i = 0; i < initial.length; i++) {
         hash = initial.charCodeAt(i) + ((hash << 5) - hash)
         hash = hash & hash

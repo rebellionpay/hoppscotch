@@ -10,9 +10,7 @@ import {
   signInWithEmailAndPassword as signInWithEmailAndPass,
   isSignInWithEmailLink as isSignInWithEmailLinkFB,
   fetchSignInMethodsForEmail,
-  sendSignInLinkToEmail,
   signInWithEmailLink as signInWithEmailLinkFB,
-  ActionCodeSettings,
   signOut,
   linkWithCredential,
   AuthCredential,
@@ -245,11 +243,8 @@ export async function linkWithFBCredential(
  * @param email - Email to send the email to
  * @param actionCodeSettings - The settings to apply to the link
  */
-export async function signInWithEmail(
-  email: string,
-  actionCodeSettings: ActionCodeSettings
-) {
-  return await sendSignInLinkToEmail(getAuth(), email, actionCodeSettings)
+export async function signInWithEmail(email: string, password: string) {
+  return await signInWithEmailAndPassword(email, password)
 }
 
 /**
@@ -378,20 +373,9 @@ async function reauthenticateUser() {
     const email = prompt(
       "Reauthenticate your account using your current email:"
     )
-    const actionCodeSettings = {
-      url: `${process.env.BASE_URL}/enter`,
-      handleCodeInApp: true,
-    }
-    await signInWithEmail(email as string, actionCodeSettings)
-      .then(() =>
-        alert(
-          `Check your inbox - we sent an email to ${email}. It contains a magic link that will reauthenticate your account.`
-        )
-      )
-      .catch((e) => {
-        alert(`Error: ${e.message}`)
-        console.error(e)
-      })
+    const password = prompt("Now enter your password")
+
+    await signInWithEmail(email as string, password as string)
     return
   }
   try {
